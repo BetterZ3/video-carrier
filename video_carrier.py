@@ -22,12 +22,12 @@ from moviepy.editor import *
 from moviepy.video.tools.subtitles import SubtitlesClip
 
 # 科大讯飞平台的 appid
-XF_APP_ID = '909d44bf'
+XF_APP_ID = ''
 # 科大讯飞语音转写的 SecretKey
-XF_LFASR_SECRET_KEY = '39f442e4fb3a66f7a0ae6e577e77a009'
+XF_LFASR_SECRET_KEY = ''
 # 科大讯飞机器翻译 APISecret、APIKey
-XF_MT_API_SECRET = 'OGEwNjg1Yzk3MGQxNTEzYzY5MjQ5ZTE3'
-XF_MT_API_KEY = 'b1ff32e3260542e69b1702e46816f8ec'
+XF_MT_API_SECRET = ''
+XF_MT_API_KEY = ''
 
 
 def gen_url(video_id):
@@ -134,7 +134,7 @@ def write_srt_to_video(video_file, srt_file):
             size=(input_video.size[0] * 0.98, input_video.size[1] * 0.99))
     )
     final_video = CompositeVideoClip(
-        [input_video, sub_titles.set_position((0.01, -0.03), relative=True)]
+        [input_video, sub_titles.set_position((0.01, 0), relative=True)]
     ).set_duration(input_video.duration)
     out_file = file_name(video_file) + '_srt.mp4'
     # threads为FFmpeg处理视频时可用的线程数，根据机器的核心数进行配置
@@ -241,10 +241,10 @@ if __name__ == '__main__':
     proxy_url = 'socks5://127.0.0.1:1080/'
 
     # 从YouTube下载视频到本地
-    download_video(video_id)
+    download_video(video_id, proxy_url)
 
     # 视频处理
-    info = video_info(video_id)
+    info = video_info(video_id, proxy_url)
     video_file = info['id'] + '.' + info['ext']
     result_file = process_video(video_file, lang='en', translate='cn', ratio=0.8)
 
